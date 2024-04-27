@@ -1,0 +1,15 @@
+name: Run in Container
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  Linux:
+    runs-on: ubuntu-latest
+    container:
+      image: opensuse/tumbleweed
+    steps:
+      - name: Check OS
+        run: cat /etc/os-release
