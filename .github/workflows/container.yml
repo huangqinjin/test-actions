@@ -13,3 +13,6 @@ jobs:
     steps:
       - name: Check OS
         run: cat /etc/os-release
+      - name: Install Prerequisites
+        run: |
+          sudo zypper in wine
