@@ -1,0 +1,61 @@
+name: Install
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  Linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Official CMake
+        run: |
+          sudo apt-get install cmake
+          which cmake
+          cmake --version
+
+      - name: Install Nightly Build
+        if: false
+        run: |
+          curl -o install-cmake.sh -fsSL https://cmake.org/files/dev/cmake-3.29.20240511-gf891d5c-linux-x86_64.sh
+          chmod +x install-cmake.sh
+          ./install-cmake.sh --help || true
+          sudo ./install-cmake.sh --skip-license --prefix=/usr/local
+          ls -l
+          which cmake
+          cmake --version
+
+      - name: Install Nightly Build With Zip
+        run: |
+          curl -fsSL https://cmake.org/files/dev/cmake-3.29.20240511-gf891d5c-linux-x86_64.tar.gz |
+          sudo tar -xzf - -C /usr/local --strip-components=1
+          which cmake
+          cmake --version
+
+  Windows:
+    runs-on: windows-latest
+    steps:
+      - name: Install Official CMake
+        shell: cmd
+        run: |
+          where cmake.exe
+          cmake --version
+
+      - name: Install Nightly Build
+        if: false
+        run: |
+          Invoke-WebRequest -OutFile install-cmake.msi https://cmake.org/files/dev/cmake-3.29.20240511-gf891d5c-windows-x86_64.msi
+          Start-Process -NoNewWindow -Wait msiexec "/i install-cmake.msi /qn"
+          Expand-Archive -Force -DestinationPath "C:\Program Files\CMake"
+          cmd /c dir
+          cmd /c where cmake.exe
+          cmake --version
+
+      - name: Install Nightly Build With Zip
+        run: |
+          Invoke-WebRequest -OutFile cmake.zip https://cmake.org/files/dev/cmake-3.29.20240511-gf891d5c-windows-x86_64.zip
+          Expand-Archive cmake.zip -Force -DestinationPath "C:\Program Files\CMake"
+          cmd /c where cmake.exe
+          cmake --version
