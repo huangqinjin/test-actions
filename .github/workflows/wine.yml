@@ -21,8 +21,8 @@ jobs:
           
           setlocal 
           cd
-          endlocal
+          endlocal          
           cd
           EOF
 
-          
+          $(command -v wine64 || command -v wine) cmd /c test.bat
