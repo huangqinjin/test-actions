@@ -1,0 +1,28 @@
+name: Wine Tests
+on:
+  push:
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install prerequisites
+        run: |
+          sudo apt-get install wine64
+
+      - name: Wine-57137
+        run: |
+          # https://bugs.winehq.org/show_bug.cgi?id=57137
+          cat <<EOF > test.bat
+          @echo off
+          pushd "%~dp0.."
+          cd
+          popd
+          
+          setlocal 
+          cd
+          endlocal
+          cd
+          EOF
+
+          
