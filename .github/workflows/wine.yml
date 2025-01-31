@@ -26,3 +26,11 @@ jobs:
           EOF
 
           $(command -v wine64 || command -v wine) cmd /c test.bat
+
+
+  macOS:
+    runs-on: macOS-latest
+    steps:
+      - name: Install prerequisites
+        run: |
+          brew install wine-stable
