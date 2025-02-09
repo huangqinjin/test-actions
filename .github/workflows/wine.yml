@@ -29,7 +29,14 @@ jobs:
 
 
   macOS:
-    runs-on: macOS-latest
+    runs-on: macos-latest
+    steps:
+      - name: Install prerequisites
+        run: |
+          brew install wine-stable
+
+  macOS-15:
+    runs-on: macos-15
     steps:
       - name: Install prerequisites
         run: |
