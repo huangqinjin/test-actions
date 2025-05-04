@@ -10,8 +10,6 @@ jobs:
     runs-on: windows-11-arm
     steps:
       - uses: actions/setup-python@v5
-        with:
-          #python-version: '3.12'
       - name: Test Arch
         run: |
           Write-Host "host arch env: $env:PROCESSOR_ARCHITECTURE"
