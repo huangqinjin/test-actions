@@ -11,9 +11,9 @@ jobs:
     steps:
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.12'
       - name: Test Arch
         run: |
           Write-Host "host arch env: $env:PROCESSOR_ARCHITECTURE"
-          echo "import platform`nprint(platform.machine())" > a.py
-          python a.py
+          python --version
+          python -c "import platform; print(platform.machine())"
