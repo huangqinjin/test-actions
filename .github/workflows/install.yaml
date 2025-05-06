@@ -12,6 +12,7 @@ jobs:
       - uses: actions/setup-python@v5
       - name: Test Arch
         run: |
+          vcpkg --version
           Write-Host "host arch env: $env:PROCESSOR_ARCHITECTURE"
           python --version
           python -c "import platform; print(platform.machine())"
