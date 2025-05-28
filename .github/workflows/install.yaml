@@ -10,6 +10,8 @@ jobs:
     runs-on: windows-11-arm
     steps:
       - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9.13'
       - name: Test Arch
         run: |
           vcpkg --version
