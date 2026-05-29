@@ -4,40 +4,13 @@ on:
 
 jobs:
   ubuntu:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
+    container: ghcr.io/mstorsjo/wine
     steps:
       - name: Install prerequisites
         run: |
-          sudo apt-get install wine64
-
-      - name: Wine-57137
-        run: |
-          # https://bugs.winehq.org/show_bug.cgi?id=57137
-          cat <<EOF > test.bat
-          @echo off
-          pushd "%~dp0.."
-          cd
-          popd
-          
-          setlocal 
-          cd
-          endlocal          
-          cd
-          EOF
-
-          $(command -v wine64 || command -v wine) cmd /c test.bat
-
-
-  macOS:
-    runs-on: macos-latest
-    steps:
-      - name: Install prerequisites
-        run: |
-          brew install wine-stable
-
-  macOS-15:
-    runs-on: macos-15
-    steps:
-      - name: Install prerequisites
-        run: |
-          brew install wine-stable
+          sudo apt-get update && sudo apt-get install python3 msitools ca-certificates cmake ninja-build winbind meson
+          WINE=$(command -v wine64 || command -v wine || false)
+          curl -s -L -O https://github.com/wine-mono/wine-mono/releases/download/wine-mono-10.4.1/wine-mono-10.4.1-x86.msi
+          $WINE msiexec /i wine-mono-10.4.1-x86.msi
+          ls ${WINEPREFIX:-$HOME/.wine}/drive_c/windows/mono
